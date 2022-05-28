@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { addTodo } from '../redux/action/addTodo.action';
 
@@ -12,6 +12,7 @@ class InputField extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.addTodo(this.state.todo);
+    this.setState({ todo: '' });
   };
   render() {
     return (
@@ -19,6 +20,7 @@ class InputField extends React.Component {
         <input
           type="text"
           name="todo"
+          value={this.state.todo}
           placeholder="Enter your todo"
           onChange={this.handleChange}
         />

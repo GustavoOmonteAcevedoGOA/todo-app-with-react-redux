@@ -1,18 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addTodo } from '../redux/action/addTodo.action';
+import { addText, addTodo, editAddTodo } from '../redux/action/addTodo.action';
 
 class InputField extends React.Component {
-  state = {
-    todo: '',
-  };
-  handleChange = (e) => {
-    this.setState({ todo: e.target.value });
-  };
+  handleChange = (e) => this.props.addText(e.target.value);
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.addTodo(this.state.todo);
-    this.setState({ todo: '' });
+    if (this.props.selected || this.props.selected === 0) {
+      this.props.editAddTodo({
+        value: this.props.text,
+        selected: this.props.selected,
+      });
+    } else {
+      this.props.addTodo(this.props.text);
+    }
   };
   render() {
     return (
@@ -20,7 +21,7 @@ class InputField extends React.Component {
         <input
           type="text"
           name="todo"
-          value={this.state.todo}
+          value={this.props.text}
           placeholder="Enter your todo"
           onChange={this.handleChange}
         />
@@ -29,8 +30,15 @@ class InputField extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  addTodo: (todo) => dispatch(addTodo(todo)),
+const mapStateToProps = (state) => ({
+  text: state.text,
+  selected: state.selected,
 });
 
-export default connect(null, mapDispatchToProps)(InputField);
+const mapDispatchToProps = (dispatch) => ({
+  addTodo: (todo) => dispatch(addTodo(todo)),
+  addText: (value) => dispatch(addText(value)),
+  editAddTodo: (obj) => dispatch(editAddTodo(obj)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(InputField);

@@ -17,3 +17,9 @@ input {
   width: 200px;
   padding: 5px;
 }
+
+button {
+  background: content-box;
+  color: #ffffffa6;
+  border: none;
+}

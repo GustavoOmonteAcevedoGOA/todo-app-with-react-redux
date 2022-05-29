@@ -22,9 +22,9 @@ function Todo({ todo, idx, deleteTodo, editTodo, selected, text }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  text: state.text,
-  selected: state.selected,
+const mapStateToProps = ({ text, selected }) => ({
+  text,
+  selected,
 });
 
 const mapDispatchToProps = (dispatch) => ({
